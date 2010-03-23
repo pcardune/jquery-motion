@@ -38,8 +38,8 @@ In Depth Overview
 
 Motion works by taking a snapshot of the DOM before and after it has
 been manipulated, keeping track of the positions of all the DOM
-elements being moved.  Using fixed positioning, the DOM elements are
-then "moved" from their old location to their new location on the
+elements being moved.  Using absolute positioning, the DOM elements
+are then "moved" from their old location to their new location on the
 page.
 
 Provided Functions

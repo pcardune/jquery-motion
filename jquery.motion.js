@@ -83,7 +83,7 @@
                      spacers.push(spacer);
                      $this.after(spacer);
 
-                     $this.css({position:'fixed',
+                     $this.css({position:'absolute',
                                 top:fromPosition.top+"px",
                                 left:fromPosition.left+"px"});
                      $this.animate(
