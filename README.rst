@@ -45,8 +45,10 @@ page.
 Provided Functions
 ..................
 
-- **motion** - Animate the selected elements using the given DOM
-    manipulation function.
+- **motion**
+
+   Animate the selected elements using the given DOM
+   manipulation function.
 
   - *arguments:*
 
@@ -78,8 +80,10 @@ Provided Functions
                              speed:"slow",
                              maxEffected:50});
 
-- **withMotion** - Return a function for use as event handlers that
-    just call the ``motion`` function.  This takes all the same
-    arguments at the ``motion`` function.  For example::
+- **withMotion**
+
+    Return a function for use with event handlers that
+    just calls the ``motion`` function.  This takes all the same
+    arguments as the ``motion`` function.  For example::
 
       $("#some-button").click($(".effected").withMotion(someMoverFunc));
