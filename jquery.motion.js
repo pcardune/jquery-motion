@@ -1,9 +1,17 @@
 (function($){
-     $.fn.motion = function(mover, callback, spacerClass, maxAffected){
+     $.fn.withMotion = function(mover, speed, callback, spacerClass, maxEffected){
+         var that = this;
+         return function(){
+             $(that).motion(mover, speed, callback, spacerClass, maxEffected);
+         };
+     };
+
+     $.fn.motion = function(mover, speed, callback, spacerClass, maxEffected){
          var config = {
              spacerClass: "__spacer__",
              callback: $.noop || function(){},
-             maxAffected: 100
+             maxEffected: 100,
+             speed: "medium"
          };
          if ($.isFunction(mover)){
              $.extend(
@@ -12,19 +20,19 @@
                      mover: mover,
                      callback: callback,
                      spacerClass: spacerClass,
-                     maxAffected: maxAffected
+                     maxEffected: maxEffected
                  });
          } else {
              $.extend(config,mover);
          }
-         var affected = this;
-         if (affected.length > config.maxAffected){
+         var effected = this;
+         if (effected.length > config.maxEffected){
              config.mover.call(this);
              config.callback();
              return;
          }
-         // step 1: go through affected elements and save their current position.
-         affected.each(
+         // step 1: go through effected elements and save their current position.
+         effected.each(
              function(){
                  $.data(this, "fromPosition", $(this).offset());
              });
@@ -35,7 +43,7 @@
          var spacers = [];
          function check(){
              if (animating === 0){
-                 affected.css({position:'', left:'', top:''});
+                 effected.css({position:'', left:'', top:''});
                  for (var i=0,ii=spacers.length; i<ii; i++){
                      spacers[i].remove();
                  }
@@ -44,9 +52,9 @@
          }
          var docViewTop = $(window).scrollTop();
          var docViewBottom = docViewTop + $(window).height();
-         affected.each(
+         effected.each(
              function(){
-                 // save new position of affected element
+                 // save new position of effected element
                  var $this = $(this);
                  var toPosition = $this.offset();
                  var fromPosition = $.data(this, "fromPosition");
@@ -55,7 +63,7 @@
                      return;
                  }
                  /**
-                  * animate the affected element.  This will automatically skip over elements which:
+                  * animate the effected element.  This will automatically skip over elements which:
                   *  a) have not actually moved
                   *  b) are not within the viewable window space.
                   */
@@ -64,7 +72,7 @@
                       (toPosition.top < docViewBottom && toPosition.top >= docViewTop))){
 
 
-                     // add spacers for affected element
+                     // add spacers for effected element
                      var spacer = $('<'+this.tagName+' class="'+this.className+' '+config.spacerClass+'">'
                                     + '</'+this.tagName+'>')
                          .css(
@@ -83,7 +91,7 @@
                              top:toPosition.top+"px",
                              left:toPosition.left+"px"
                          },
-                         "slow",
+                         config.speed,
                          function(){
                              animating--;
                              check();

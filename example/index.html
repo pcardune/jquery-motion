@@ -116,12 +116,12 @@ while (i--){
 $("#shuffle2").click(
     function(){
         $("#status").html("in motion");
-        $("#list1 li, #list2 li").motion(getAppender("#list1, #list2"), onComplete);
+        $("#list1 li, #list2 li").motion(getAppender("#list1, #list2"), "slow", onComplete);
     });
 $("#shuffle").click(
     function(){
         $("#status").html("in motion");
-        $("#list1 li").motion(getAppender("#list1"), onComplete);
+        $("#list1 li").motion(getAppender("#list1"), "slow", onComplete);
     });
 
 $("#shuffle3").click(
