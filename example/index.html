@@ -1,0 +1,134 @@
+<html>
+  <head>
+    <title>JQuery Motion Plugin Example</title>
+    <link rel="stylesheet" type="text/css"
+          href="http://yui.yahooapis.com/combo?2.6.0/build/reset-fonts/reset-fonts.css" />
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.3.0/jquery.min.js"></script>
+    <script type="text/javascript" src="../jquery.motion.js"></script>
+    <style type="text/css">
+      body {
+        width: 800px;
+        margin: auto;
+      }
+      h1{
+        font-size: 200%;
+      }
+      h2{
+        font-size: 150%;
+      }
+      ul{
+        float: left;
+        border: 1px solid black;
+        margin: 10px;
+        padding: 10px;
+      }
+      #list1 li{
+        font-weight: bold;
+      }
+      .a{
+        color: red;
+      }
+      .b{
+        color: blue;
+      }
+      #list3{
+        width: 400px;
+      }
+      #list3 li{
+        float: left;
+        padding: 2px;
+        margin: 2px;
+        display: inline-block;
+        display: -moz-inline-block;
+        border: 1px solid black;
+        width: 30px;
+        text-align: center;
+      }
+      #list3 li.__spacer__{
+        border: 1px solid white;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>JQuery Motion Plugin</h1>
+    <h2>Example One</h2>
+    <div>
+      <button id="shuffle">Shuffle 1</button>
+      <button id="shuffle2">Shuffle 2</button>
+      <button id="shuffle3">Shuffle 3</button>
+      <span id="status"></span>
+    </div>
+    <ul id="list1">
+      <li class="a">One</li>
+      <li class="a">Two</li>
+      <li class="a">Three</li>
+      <li class="a">Four</li>
+      <li class="a">Five</li>
+      <li class="a">Six</li>
+      <li class="a">Seven</li>
+      <li class="a">Eight</li>
+      <li class="a">Nine</li>
+      <li class="a">Ten</li>
+    </ul>
+
+    <ul id="list2">
+      <li class="b">One</li>
+      <li class="b">Two</li>
+      <li class="b">Three</li>
+      <li class="b">Four</li>
+      <li class="b">Five</li>
+      <li class="b">Six</li>
+      <li class="b">Seven</li>
+      <li class="b">Eight</li>
+      <li class="b">Nine</li>
+      <li class="b">Ten</li>
+    </ul>
+
+    <ul id="list3">
+    </ul>
+
+    <script type="text/javascript">
+/**
+ * This function builds a function for randomly adding
+ * dom elements to any number of specified containers.
+ */
+function getAppender(containers){
+    containers = $(containers);
+    var size = containers.length;
+    return function(){
+        var $this = $(this);
+        var i = $this.length, items = $this.length;
+        while (i--){
+          $this.eq(Math.floor(Math.random()*items)).appendTo(containers.get(Math.floor(Math.random()*size)))
+        }
+    };
+}
+
+function onComplete(){
+    $("#status").html("done");
+}
+
+var i=150;
+while (i--){
+    $("#list3").append("<li>"+i+"</li>");
+}
+
+$("#shuffle2").click(
+    function(){
+        $("#status").html("in motion");
+        $("#list1 li, #list2 li").motion(getAppender("#list1, #list2"), onComplete);
+    });
+$("#shuffle").click(
+    function(){
+        $("#status").html("in motion");
+        $("#list1 li").motion(getAppender("#list1"), onComplete);
+    });
+
+$("#shuffle3").click(
+    function(){
+        $("#status").html("in motion");
+        $("#list3 li").motion({mover:getAppender("#list3"), callback:onComplete, maxAffected:200});
+    });
+    </script>
+  </body>
+</html>
